@@ -1,21 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
 :root {
-  --royal-blue: #1d4ed8;
-  --royal-blue-dark: #1e3a8a;
-  --royal-blue-soft: #dbeafe;
-  --ink: #111827;
-  --text: #374151;
-  --muted: #6b7280;
-  --line: #e5e7eb;
-  --page: #f3f6fb;
-  --panel: #ffffff;
-  --warning: #b45309;
-  --warning-bg: #fef3c7;
-  --success: #047857;
-  --success-bg: #d1fae5;
-  --danger: #b91c1c;
+  --font-body:
+    "Plus Jakarta Sans", "Segoe UI", -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
+  --royal-blue: #1f3a5f;
+  --royal-blue-dark: #13253f;
+  --royal-blue-soft: #e7eef7;
+  --ink: #162235;
+  --text: #334155;
+  --muted: #64748b;
+  --line: #d7e0ea;
+  --page: #f6f3ec;
+  --panel: #fffdf8;
+  --warning: #9a6700;
+  --warning-bg: #f8edd0;
+  --success: #0f766e;
+  --success-bg: #d8f1ed;
+  --danger: #b42318;
   --radius: 8px;
-  --shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
-  --shadow-soft: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --shadow: 0 10px 24px rgba(31, 58, 95, 0.08);
+  --shadow-soft: 0 2px 10px rgba(31, 58, 95, 0.05);
   --transition: 160ms ease;
 }
 
@@ -25,9 +31,9 @@
 
 body {
   margin: 0;
-  background: var(--page);
+  background: linear-gradient(180deg, #fbfaf6 0%, var(--page) 100%);
   color: var(--text);
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: var(--font-body);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
@@ -47,11 +53,10 @@ button {
   padding: 20px;
 }
 
-/* Key change: academic header with logo and fixed TASK badge. */
 .app-header {
   align-items: center;
-  background: var(--panel);
-  border: 1px solid var(--line);
+  background: rgba(255, 253, 248, 0.92);
+  border: 1px solid rgba(215, 224, 234, 0.9);
   border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
   display: flex;
@@ -85,7 +90,9 @@ button {
 
 .app-header h1 {
   color: var(--ink);
+  font-family: var(--font-display);
   font-size: 22px;
+  font-weight: 700;
   line-height: 1.2;
   margin: 0;
 }
@@ -97,10 +104,10 @@ button {
 }
 
 .task-badge {
-  background: var(--royal-blue-soft);
-  border: 1px solid rgba(29, 78, 216, 0.22);
+  background: #edf3fa;
+  border: 1px solid rgba(31, 58, 95, 0.14);
   border-radius: var(--radius);
-  color: var(--royal-blue);
+  color: var(--royal-blue-dark);
   font-size: 13px;
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -109,7 +116,6 @@ button {
   white-space: nowrap;
 }
 
-/* Key change: three-zone workspace. */
 .workspace-grid {
   display: grid;
   gap: 18px;
@@ -121,7 +127,7 @@ button {
 .panel,
 .center-action {
   background: var(--panel);
-  border: 1px solid var(--line);
+  border: 1px solid rgba(215, 224, 234, 0.9);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
@@ -141,7 +147,7 @@ button {
 }
 
 .eyebrow {
-  color: var(--royal-blue);
+  color: var(--royal-blue-dark);
   display: block;
   font-size: 12px;
   font-weight: 800;
@@ -153,7 +159,9 @@ button {
 .panel h2,
 .report-hero h2 {
   color: var(--ink);
+  font-family: var(--font-display);
   font-size: 20px;
+  font-weight: 700;
   margin: 0;
 }
 
@@ -198,23 +206,24 @@ button {
   margin-bottom: 8px;
 }
 
-/* Key change: focus border turns royal blue. */
 .field-group textarea {
-  background: #ffffff;
-  border: 1px solid #cfd7e3;
+  background: #fffdfb;
+  border: 1px solid #d2dae5;
   border-radius: var(--radius);
   color: var(--text);
   min-height: 118px;
   outline: none;
   padding: 14px;
   resize: vertical;
-  transition: border-color var(--transition), box-shadow var(--transition);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
   width: 100%;
 }
 
 .field-group textarea:focus {
-  border-color: var(--royal-blue);
-  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.14);
+  border-color: var(--royal-blue-dark);
+  box-shadow: 0 0 0 3px rgba(19, 37, 63, 0.12);
 }
 
 .essay-field textarea {
@@ -236,25 +245,28 @@ button {
 }
 
 .stat-chip {
-  background: #eef2f7;
+  background: #edf2f7;
   color: var(--muted);
 }
 
 .quick-actions button,
 .copy-button {
-  background: #ffffff;
-  border: 1px solid #cfd7e3;
+  background: #fffdf8;
+  border: 1px solid #d2dae5;
   border-radius: var(--radius);
-  color: var(--royal-blue);
+  color: var(--royal-blue-dark);
   font-weight: 800;
   padding: 9px 12px;
-  transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  transition:
+    transform var(--transition),
+    border-color var(--transition),
+    background var(--transition);
 }
 
 .quick-actions button:hover,
 .copy-button:hover:not(:disabled) {
-  background: var(--royal-blue-soft);
-  border-color: var(--royal-blue);
+  background: #eef3fa;
+  border-color: var(--royal-blue-dark);
   transform: scale(1.02);
 }
 
@@ -274,10 +286,10 @@ button {
 /* Key change: prominent center scoring button with light hover motion. */
 .score-button {
   align-items: center;
-  background: var(--royal-blue);
+  background: linear-gradient(180deg, #203d63 0%, var(--royal-blue-dark) 100%);
   border: 0;
   border-radius: var(--radius);
-  box-shadow: 0 12px 22px rgba(29, 78, 216, 0.22);
+  box-shadow: 0 12px 22px rgba(19, 37, 63, 0.18);
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -286,13 +298,16 @@ button {
   gap: 10px;
   min-height: 132px;
   padding: 20px 18px;
-  transition: transform var(--transition), background var(--transition), box-shadow var(--transition);
+  transition:
+    transform var(--transition),
+    background var(--transition),
+    box-shadow var(--transition);
   width: 100%;
 }
 
 .score-button:hover:not(:disabled) {
-  background: var(--royal-blue-dark);
-  box-shadow: 0 14px 26px rgba(29, 78, 216, 0.28);
+  background: linear-gradient(180deg, #27486f 0%, #13253f 100%);
+  box-shadow: 0 14px 26px rgba(19, 37, 63, 0.24);
   transform: scale(1.03);
 }
 
@@ -339,7 +354,7 @@ button {
 }
 
 .report-hero {
-  background: linear-gradient(135deg, var(--royal-blue), var(--royal-blue-dark));
+  background: linear-gradient(135deg, #1f3a5f, #13253f);
   border-radius: var(--radius);
   color: #ffffff;
   padding: 18px;
@@ -355,7 +370,6 @@ button {
   line-height: 1;
 }
 
-/* Key change: four IELTS criterion score cards. */
 .criteria-grid {
   display: grid;
   gap: 12px;
@@ -364,8 +378,8 @@ button {
 }
 
 .criterion-card {
-  background: #f8fafc;
-  border: 1px solid var(--line);
+  background: #fffaf2;
+  border: 1px solid rgba(215, 224, 234, 0.85);
   border-radius: var(--radius);
   padding: 14px;
 }
@@ -378,7 +392,7 @@ button {
 }
 
 .criterion-card span {
-  color: var(--royal-blue);
+  color: var(--royal-blue-dark);
   font-size: 13px;
   font-weight: 900;
 }
@@ -390,7 +404,9 @@ button {
 
 .criterion-card h3 {
   color: var(--ink);
-  font-size: 14px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
   margin: 10px 0 4px;
 }
 
@@ -401,8 +417,8 @@ button {
 }
 
 .report-meta {
-  border-bottom: 1px solid var(--line);
-  border-top: 1px solid var(--line);
+  border-bottom: 1px solid rgba(215, 224, 234, 0.9);
+  border-top: 1px solid rgba(215, 224, 234, 0.9);
   color: var(--muted);
   font-size: 13px;
   margin: 14px 0;
@@ -419,7 +435,6 @@ button {
   opacity: 0.65;
 }
 
-/* Key change: collapsible feedback panels. */
 .accordion-list {
   display: flex;
   flex-direction: column;
@@ -428,14 +443,14 @@ button {
 }
 
 .accordion-item {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(215, 224, 234, 0.9);
   border-radius: var(--radius);
   overflow: hidden;
 }
 
 .accordion-item > button {
   align-items: center;
-  background: #f8fafc;
+  background: #f8f6ef;
   border: 0;
   color: var(--ink);
   display: flex;
@@ -457,9 +472,8 @@ button {
   margin-bottom: 8px;
 }
 
-/* Key change: historical score search and trend visualization. */
 .history-panel {
-  border-top: 1px solid var(--line);
+  border-top: 1px solid rgba(215, 224, 234, 0.9);
   margin-top: 18px;
   padding-top: 18px;
 }
@@ -488,19 +502,22 @@ button {
 }
 
 .history-clear-button {
-  background: #ffffff;
-  border: 1px solid #cfd7e3;
+  background: #fffdf8;
+  border: 1px solid #d2dae5;
   border-radius: var(--radius);
-  color: var(--royal-blue);
+  color: var(--royal-blue-dark);
   font-size: 13px;
   font-weight: 800;
   padding: 8px 11px;
-  transition: transform var(--transition), background var(--transition), border-color var(--transition);
+  transition:
+    transform var(--transition),
+    background var(--transition),
+    border-color var(--transition);
 }
 
 .history-clear-button:hover:not(:disabled) {
-  background: var(--royal-blue-soft);
-  border-color: var(--royal-blue);
+  background: #eef3fa;
+  border-color: var(--royal-blue-dark);
   transform: scale(1.02);
 }
 
@@ -511,18 +528,20 @@ button {
 }
 
 .history-search {
-  border: 1px solid #cfd7e3;
+  border: 1px solid #d2dae5;
   border-radius: var(--radius);
   color: var(--text);
   outline: none;
   padding: 10px 12px;
-  transition: border-color var(--transition), box-shadow var(--transition);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
   width: 100%;
 }
 
 .history-search:focus {
-  border-color: var(--royal-blue);
-  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.14);
+  border-color: var(--royal-blue-dark);
+  box-shadow: 0 0 0 3px rgba(19, 37, 63, 0.12);
 }
 
 .history-list {
@@ -536,8 +555,8 @@ button {
 }
 
 .history-record {
-  background: #f8fafc;
-  border: 1px solid var(--line);
+  background: #fffaf2;
+  border: 1px solid rgba(215, 224, 234, 0.85);
   border-radius: var(--radius);
   padding: 12px;
 }
@@ -568,7 +587,7 @@ button {
 }
 
 .history-empty {
-  background: #f8fafc;
+  background: #fffaf2;
   border: 1px dashed #cfd7e3;
   border-radius: var(--radius);
   color: var(--muted);
@@ -583,7 +602,6 @@ button {
   }
 }
 
-/* Key change: >=768px keeps columns; below 768px stacks vertically. */
 @media (max-width: 1024px) {
   .workspace-grid {
     grid-template-columns: minmax(0, 1fr) 140px minmax(0, 1fr);

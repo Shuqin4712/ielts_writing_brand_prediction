@@ -146,7 +146,7 @@ const EssayAnalyzer = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
-  const [openPanels, setOpenPanels] = useState({ strengths: true, improvements: true });
+  const [openPanels, setOpenPanels] = useState({ feedback: true });
   const [scoreHistory, setScoreHistory] = useState([]);
 
   useEffect(() => {
@@ -175,16 +175,10 @@ const EssayAnalyzer = () => {
   const feedback = useMemo(() => {
     const suggestions = analysisResults.suggestions || [];
     if (!suggestions.length) {
-      return {
-        strengths: ['Run a prediction to generate strengths.'],
-        improvements: ['Run a prediction to generate improvement advice.'],
-      };
+      return ['Run a prediction to generate feedback.'];
     }
 
-    return {
-      strengths: suggestions.filter((item) => Number(analysisResults.raw_scores?.[item.criterion] || 0) >= 7),
-      improvements: suggestions.filter((item) => Number(analysisResults.raw_scores?.[item.criterion] || 0) < 7),
-    };
+    return suggestions;
   }, [analysisResults]);
 
   const canAnalyze = question.trim() !== '' && essay.trim() !== '' && !isLoading;
@@ -388,27 +382,13 @@ const EssayAnalyzer = () => {
 
           <div className="accordion-list">
             <div className="accordion-item">
-              <button type="button" onClick={() => togglePanel('strengths')}>
-                Strengths
-                <span>{openPanels.strengths ? '-' : '+'}</span>
+              <button type="button" onClick={() => togglePanel('feedback')}>
+                Feedback
+                <span>{openPanels.feedback ? '-' : '+'}</span>
               </button>
-              {openPanels.strengths && (
+              {openPanels.feedback && (
                 <ul>
-                  {(feedback.strengths.length ? feedback.strengths : ['No high-scoring criteria yet.']).map((item, index) => (
-                    <li key={index}>{renderSuggestion(item)}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-
-            <div className="accordion-item">
-              <button type="button" onClick={() => togglePanel('improvements')}>
-                Improvement Priorities
-                <span>{openPanels.improvements ? '-' : '+'}</span>
-              </button>
-              {openPanels.improvements && (
-                <ul>
-                  {(feedback.improvements.length ? feedback.improvements : ['Run a prediction to generate improvement advice.']).map((item, index) => (
+                  {feedback.map((item, index) => (
                     <li key={index}>{renderSuggestion(item)}</li>
                   ))}
                 </ul>

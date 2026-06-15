@@ -57,7 +57,6 @@ def build_model_input(question, essay):
     return f"Question: {clean_text(question)} Essay: {clean_text(essay)}"
 
 
-# 【特征工程大升级】：加入精确对应雅思评分标准的专家特征
 def extract_features(essay):
     essay_str = str(essay).lower()
     words = re.findall(r"\b\w+\b", essay_str)
@@ -65,33 +64,23 @@ def extract_features(essay):
     word_count_value = len(words)
     sentence_count = max(1, len(re.findall(r"[.!?]+", essay_str)))
     
-    # 1. 词汇丰富度 (Unique Ratio)
     unique_ratio = len(set(words)) / max(word_count_value, 1)
-
-    # 2. 平均句长 (Average Sentence Length - 对应 GRA/CC)
     avg_sentence_length = word_count_value / sentence_count
-
-    # 3. 长词比例 (Long Word Ratio - 对应 Lexical Resource)
     long_word_count = sum(1 for word in words if len(word) >= 6)
     long_word_ratio = long_word_count / max(word_count_value, 1)
-
-    # 4. 连接词数量 (Discourse Markers Count - 对应 Coherence & Cohesion)
     discourse_markers = [
         "however", "therefore", "moreover", 
         "furthermore", "in addition", "on the other hand"
     ]
     discourse_marker_count = 0
     for marker in discourse_markers:
-        # 使用 \b 确保匹配的是完整的词或词组
         discourse_marker_count += len(re.findall(rf"\b{marker}\b", essay_str))
-
-    # 依然必须做特征缩放 (Normalization)，否则网络无法收敛
     return [
-        float(word_count_value) / 400.0,       # 假设常规作文 400 词左右
-        float(unique_ratio),                   # 已经是 0~1
-        float(avg_sentence_length) / 30.0,     # 假设最长平均句长 30 词左右
-        float(long_word_ratio),                # 已经是 0~1
-        float(discourse_marker_count) / 10.0,  # 假设常规作文最多用 10 个高级连接词
+        float(word_count_value) / 400.0,
+        float(unique_ratio),
+        float(avg_sentence_length) / 30.0,
+        float(long_word_ratio),
+        float(discourse_marker_count) / 10.0,
     ]
 
 
@@ -154,22 +143,14 @@ def prepare_labels(df):
 
 def build_tf_model(vectorizer):
     tf = get_tensorflow()
-
-    # 文本输入
     text_input = tf.keras.Input(shape=(1,), dtype=tf.string, name="essay_text")
-
-    # 【改动】：人工特征输入维度从 3 提升到了 5
     feature_input = tf.keras.Input(shape=(5,), dtype=tf.float32, name="numeric_features")
 
     x = vectorizer(text_input)
     x = tf.keras.layers.Embedding(input_dim=5000, output_dim=64, name="embedding")(x)
     x = tf.keras.layers.GlobalAveragePooling1D(name="average_pooling")(x)
     x = tf.keras.layers.Dense(128, activation="relu", name="dense_128")(x)
-
-    # 特征分支
     f = tf.keras.layers.Dense(16, activation="relu", name="feature_dense")(feature_input)
-
-    # 合并
     merged = tf.keras.layers.Concatenate()([x, f])
     merged = tf.keras.layers.Dense(64, activation="relu", name="dense_64")(merged)
     
